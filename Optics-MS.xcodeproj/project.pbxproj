@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED59E4241E9D262900AED2E1 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59E4231E9D262900AED2E1 /* Lens.swift */; };
+		ED59E4271E9D2B7F00AED2E1 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59E4261E9D2B7F00AED2E1 /* Geometry.swift */; };
+		ED59E4321E9D5FC800AED2E1 /* GeometryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59E4311E9D5FC800AED2E1 /* GeometryTest.swift */; };
+		ED59E4391E9D5FED00AED2E1 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59E4261E9D2B7F00AED2E1 /* Geometry.swift */; };
 		EDB799D71E136C3800AD82E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB799D61E136C3800AD82E2 /* AppDelegate.swift */; };
 		EDB799DD1E136C3800AD82E2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB799DC1E136C3800AD82E2 /* GameScene.swift */; };
 		EDB799DF1E136C3800AD82E2 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB799DE1E136C3800AD82E2 /* GameViewController.swift */; };
@@ -15,7 +19,22 @@
 		EDB799E71E136C3800AD82E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB799E51E136C3800AD82E2 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		ED59E4341E9D5FC800AED2E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDB799CB1E136C3800AD82E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDB799D21E136C3800AD82E2;
+			remoteInfo = "Optics-MS";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		ED59E4231E9D262900AED2E1 /* Lens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
+		ED59E4261E9D2B7F00AED2E1 /* Geometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
+		ED59E42F1E9D5FC800AED2E1 /* Optics-MSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Optics-MSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED59E4311E9D5FC800AED2E1 /* GeometryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryTest.swift; sourceTree = "<group>"; };
+		ED59E4331E9D5FC800AED2E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDB799D31E136C3800AD82E2 /* Optics-MS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Optics-MS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB799D61E136C3800AD82E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDB799DC1E136C3800AD82E2 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -27,6 +46,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		ED59E42C1E9D5FC800AED2E1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EDB799D01E136C3800AD82E2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -37,10 +63,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED59E4301E9D5FC800AED2E1 /* Optics-MSTests */ = {
+			isa = PBXGroup;
+			children = (
+				ED59E4311E9D5FC800AED2E1 /* GeometryTest.swift */,
+				ED59E4331E9D5FC800AED2E1 /* Info.plist */,
+			);
+			path = "Optics-MSTests";
+			sourceTree = "<group>";
+		};
 		EDB799CA1E136C3800AD82E2 = {
 			isa = PBXGroup;
 			children = (
 				EDB799D51E136C3800AD82E2 /* Optics-MS */,
+				ED59E4301E9D5FC800AED2E1 /* Optics-MSTests */,
 				EDB799D41E136C3800AD82E2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				EDB799D31E136C3800AD82E2 /* Optics-MS.app */,
+				ED59E42F1E9D5FC800AED2E1 /* Optics-MSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,8 +93,10 @@
 		EDB799D51E136C3800AD82E2 /* Optics-MS */ = {
 			isa = PBXGroup;
 			children = (
-				EDB799D61E136C3800AD82E2 /* AppDelegate.swift */,
 				EDB799DC1E136C3800AD82E2 /* GameScene.swift */,
+				EDB799D61E136C3800AD82E2 /* AppDelegate.swift */,
+				ED59E4231E9D262900AED2E1 /* Lens.swift */,
+				ED59E4261E9D2B7F00AED2E1 /* Geometry.swift */,
 				EDB799DE1E136C3800AD82E2 /* GameViewController.swift */,
 				EDB799E01E136C3800AD82E2 /* Main.storyboard */,
 				EDB799E31E136C3800AD82E2 /* Assets.xcassets */,
@@ -70,6 +109,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		ED59E42E1E9D5FC800AED2E1 /* Optics-MSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED59E4361E9D5FC800AED2E1 /* Build configuration list for PBXNativeTarget "Optics-MSTests" */;
+			buildPhases = (
+				ED59E42B1E9D5FC800AED2E1 /* Sources */,
+				ED59E42C1E9D5FC800AED2E1 /* Frameworks */,
+				ED59E42D1E9D5FC800AED2E1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED59E4351E9D5FC800AED2E1 /* PBXTargetDependency */,
+			);
+			name = "Optics-MSTests";
+			productName = "Optics-MSTests";
+			productReference = ED59E42F1E9D5FC800AED2E1 /* Optics-MSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		EDB799D21E136C3800AD82E2 /* Optics-MS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDB799EB1E136C3800AD82E2 /* Build configuration list for PBXNativeTarget "Optics-MS" */;
@@ -97,6 +154,12 @@
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Mark Schmidt";
 				TargetAttributes = {
+					ED59E42E1E9D5FC800AED2E1 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = C2UW47HS8X;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EDB799D21E136C3800AD82E2;
+					};
 					EDB799D21E136C3800AD82E2 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = C2UW47HS8X;
@@ -118,11 +181,19 @@
 			projectRoot = "";
 			targets = (
 				EDB799D21E136C3800AD82E2 /* Optics-MS */,
+				ED59E42E1E9D5FC800AED2E1 /* Optics-MSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		ED59E42D1E9D5FC800AED2E1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EDB799D11E136C3800AD82E2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -136,6 +207,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		ED59E42B1E9D5FC800AED2E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED59E4391E9D5FED00AED2E1 /* Geometry.swift in Sources */,
+				ED59E4321E9D5FC800AED2E1 /* GeometryTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EDB799CF1E136C3800AD82E2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -143,10 +223,20 @@
 				EDB799DD1E136C3800AD82E2 /* GameScene.swift in Sources */,
 				EDB799DF1E136C3800AD82E2 /* GameViewController.swift in Sources */,
 				EDB799D71E136C3800AD82E2 /* AppDelegate.swift in Sources */,
+				ED59E4271E9D2B7F00AED2E1 /* Geometry.swift in Sources */,
+				ED59E4241E9D262900AED2E1 /* Lens.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ED59E4351E9D5FC800AED2E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDB799D21E136C3800AD82E2 /* Optics-MS */;
+			targetProxy = ED59E4341E9D5FC800AED2E1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		EDB799E01E136C3800AD82E2 /* Main.storyboard */ = {
@@ -168,6 +258,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		ED59E4371E9D5FC800AED2E1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = C2UW47HS8X;
+				INFOPLIST_FILE = "Optics-MSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.markschmidt.Optics-MSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Optics-MS.app/Optics-MS";
+			};
+			name = Debug;
+		};
+		ED59E4381E9D5FC800AED2E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = C2UW47HS8X;
+				INFOPLIST_FILE = "Optics-MSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.markschmidt.Optics-MSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Optics-MS.app/Optics-MS";
+			};
+			name = Release;
+		};
 		EDB799E91E136C3800AD82E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -267,6 +385,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C2UW47HS8X;
 				INFOPLIST_FILE = "Optics-MS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.markschmidt.Optics-MS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -281,6 +400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C2UW47HS8X;
 				INFOPLIST_FILE = "Optics-MS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.markschmidt.Optics-MS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -292,6 +412,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		ED59E4361E9D5FC800AED2E1 /* Build configuration list for PBXNativeTarget "Optics-MSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED59E4371E9D5FC800AED2E1 /* Debug */,
+				ED59E4381E9D5FC800AED2E1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EDB799CE1E136C3800AD82E2 /* Build configuration list for PBXProject "Optics-MS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -308,6 +436,7 @@
 				EDB799ED1E136C3800AD82E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

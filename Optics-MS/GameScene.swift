@@ -9,6 +9,9 @@
 import SpriteKit
 import GameplayKit
 
+
+
+
 class GameScene: SKScene {
 
     let LightCategoryName = "light"
@@ -72,7 +75,7 @@ class GameScene: SKScene {
         
         let lens2 = SKShapeNode(path: path2.cgPath)
         addChild(lens2)
-        /*
+        
         //draw focal point
         let focalPoint = SKShapeNode(circleOfRadius: radius)
         focalPoint.lineWidth = 1
@@ -86,7 +89,7 @@ class GameScene: SKScene {
         focalPoint.position = CGPoint(x: 1/f, y: lightY)
         
         addChild(focalPoint)
-        */
+ 
         updateRays()
         
         
@@ -126,16 +129,12 @@ class GameScene: SKScene {
     }
     
     func updateRays() {
-      
         
-        //let angle : CGFloat = 0.0
-
-        
-        //handle angles
         let light = childNode(withName: LightCategoryName) as! SKShapeNode
         let startPosition = light.position
         
-        let angle : CGFloat = CGFloat.pi / 8
+        let angle : CGFloat = CGFloat.pi / 16
+        
         //let angle : CGFloat = 0.0
         
         let originSlope = atan(angle)
@@ -145,19 +144,21 @@ class GameScene: SKScene {
         let originA = originSlope * originSlope + 1
         let originB = 2 * (originb * originSlope - center2.x - center2.y * originSlope)
         let originC = center2.y * center2.y + center2.x * center2.x + originb * originb - 2 * center2.y * originb - lensRadius2 * lensRadius2
-        let originDiscriminant = sqrt(originB * originB - 4 * originA * originC)
-        let ax = (-originB - originDiscriminant) / (2 * originA)
+        let originDiscriminant = originB * originB - 4 * originA * originC
+        
+        let ax = (-originB - sqrt(originDiscriminant)) / (2 * originA)
         let ay = originSlope * ax + originb
         
-        let a = CGPoint(x: ax, y: ay)
         
-        if(ay > size.height/2 + height || ay < size.height / 2 - height){
+        if(ay > size.height/2 + height || ay < size.height / 2 - height || originDiscriminant < 0){
             for child in children {
                 if child.name == NormalAlphaCategoryName || child.name == NormalBetaCategoryName || child.name == InteriorRayCategoryName || child.name == FinalRayCategoryName {
                     child.removeFromParent()
                 }
-                let y = angle > 0 ? size.height : 0
-                let endPoint = CGPoint(x: (y - originb) / originSlope, y: y)
+                //let y = angle > 0 ? size.height : 0
+                //let endPoint = CGPoint(x: (y - originb) / originSlope, y: y)
+                
+                let endPoint = CGPoint(x: size.width, y: originSlope * (size.width - startPosition.x) + startPosition.y)
                 let apath = UIBezierPath()
                 apath.move(to: startPosition)
                 apath.addLine(to: endPoint)
@@ -172,10 +173,11 @@ class GameScene: SKScene {
             }
             return
         }
-        // ORIGIN RAY
-        //let ax = distance2 + size.width/2 - cos(asin((lightY - size.height/2)/lensRadius2)) * lensRadius2
-        //let ay = lightY!
         
+        
+        
+        let a = CGPoint(x: ax, y: ay)        // ORIGIN RAY
+     
         
         let apath = UIBezierPath()
         apath.move(to: startPosition)
@@ -213,17 +215,6 @@ class GameScene: SKScene {
         let r_alpha = asin(sin(alpha)/refractionIndex) + normalAngle
         let m = atan(r_alpha)
 
-        /*
-        let normalAngle = atan(normalSlope)
-        let alpha = normalAngle + angle
-        let r_alpha = asin(sin(alpha)/refractionIndex)
-        var m = atan(r_alpha)
-        if (angle > 0 && m < 0) || (angle < 0 && m > 0){
-            m = -m
-        }
-        
-        */
-        //print("alpha = \(alpha), normalAngle = \(normalAngle), angle = \(angle), r_alpha = \(r_alpha)")
         let b = -m * a.x + a.y
         
         let A = m * m + 1
@@ -269,13 +260,7 @@ class GameScene: SKScene {
         let beta = incident - normal
         let temp = sin(beta) * refractionIndex
         //var offset : CGFloat = 0.0
-        /*if temp > 1 {
-            offset = 2/3
-            temp = sin(beta - asin(1/refractionIndex)) * refractionIndex
-        } else if temp < -1 {
-            offset = 2/3
-            temp = sin(beta - asin(1/refractionIndex)) * refractionIndex
-        }*/
+        
         
         if temp > 1 || temp < -1 {
             if let finalRay = childNode(withName: FinalRayCategoryName) as? SKShapeNode {
@@ -283,9 +268,11 @@ class GameScene: SKScene {
             }
             return
         }
-        let r_beta = asin(temp) + normal
-        let mb = atan(r_beta)
-        //print("temp = \(temp), r_beta = \(r_beta * 180 / CGFloat.pi), beta = \(beta * 180 / CGFloat.pi)" )
+        
+        let r_beta = asin(temp)
+        let mb = atan(r_beta + normal)
+        
+        print("temp = \(temp), normal = \(normal * 180 / CGFloat.pi), r_beta = \(r_beta * 180 / CGFloat.pi), beta = \(beta * 180 / CGFloat.pi)" )
         let edgePoint = CGPoint(x: size.width, y: mb * (size.width - bpoint.x) + bpoint.y)
         
         let finalPath = UIBezierPath()
