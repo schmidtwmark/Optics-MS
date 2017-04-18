@@ -21,30 +21,33 @@ class GameScene: SKScene {
     let InteriorRayCategoryName = "interior"
     let FinalRayCategoryName = "final"
     let FocalPointCategoryName = "focus"
+    let TargetCategoryName = "target"
     
     
     var isFingerOnLight = false
-    
-    let radius : CGFloat = 20.0
+    var isDragging = false
+    var positions : [CGFloat]?
     let refractionIndex : CGFloat = 1.5
     
-    let lensRadius1 : CGFloat = 350.0
-    let lensRadius2 : CGFloat = 350.0
+   
+    var lightY : CGFloat?
+    var targetY : CGFloat?
+    let angle : CGFloat = 0.0
+    var height : CGFloat?
+    var lens : Lens?
     
-    var lightY : CGFloat!
-    
-    var height, angle1, distance1, angle2, distance2 : CGFloat!
-    var center1, center2 : CGPoint!
-    var path1 : UIBezierPath!
-    var path2 : UIBezierPath!
-    
-    var a, b, c : CGPoint!
+    var leftIntersection : CGPoint?
+    var rightIntersection : CGPoint?
     
     
+    
+    /// Starting method, called when the view is moved to this scene
+    ///
+    /// - Parameter view: the view
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-
-        let light = SKShapeNode(circleOfRadius: radius)
+        height = size.height/4
+        let light = SKShapeNode(circleOfRadius: 20.0)
         light.lineWidth = 1
         light.fillColor = .white
         light.strokeColor = .blue
@@ -55,241 +58,258 @@ class GameScene: SKScene {
         lightY = light.position.y
         addChild(light)
         
-        height = size.height * 0.2
-        angle1 = asin(height / lensRadius1)
-        distance1 = cos(angle1) * lensRadius1
-        center1 = CGPoint(x: size.width/2 - distance1, y: size.height/2)
+        lens = Lens(leftRadius: 250.0, rightRadius: 350.0, height: height!, refractionIndex: refractionIndex)
+        lens?.moveToCenter(frameWidth: size.width, frameHeight: size.height)
         
-        //print("height = \(height) lensRadius1 = \(lensRadius1) angle1 = \(angle1)  distance1 = \(distance1)")
+        let leftLensPath = UIBezierPath(arcCenter: (lens?.leftCircle.center)!, radius: (lens?.leftCircle.radius)!, startAngle: CGFloat.pi-(lens?.leftAngle)!, endAngle: CGFloat.pi + (lens?.leftAngle)!, clockwise: true)
+        let leftLens = SKShapeNode(path: leftLensPath.cgPath)
+        addChild(leftLens)
         
-        path1 = UIBezierPath(arcCenter: center1, radius: lensRadius1, startAngle: -angle1, endAngle: angle1, clockwise: true)
-        let lens1 = SKShapeNode(path: path1.cgPath)
-        addChild(lens1)
+        let rightLensPath = UIBezierPath(arcCenter: (lens?.rightCircle.center)!, radius: (lens?.rightCircle.radius)!, startAngle: -(lens?.rightAngle)!, endAngle: (lens?.rightAngle)!, clockwise: true)
+        let rightLens = SKShapeNode(path: rightLensPath.cgPath)
+        addChild(rightLens)
         
+        let target = SKShapeNode(circleOfRadius: 20.0)
+        target.lineWidth = 1
+        target.fillColor = .black
+        target.strokeColor = .red
+        target.glowWidth = 2.0
+        target.name = TargetCategoryName
         
-        angle2 = asin(height / lensRadius2)
-        distance2 = cos(angle2) * lensRadius2
-        center2 = CGPoint(x: size.width/2 + distance2, y: size.height/2)
-        
-        path2 = UIBezierPath(arcCenter: center2, radius: lensRadius2, startAngle: CGFloat.pi - angle2, endAngle: CGFloat.pi + angle2, clockwise: true)
-        
-        let lens2 = SKShapeNode(path: path2.cgPath)
-        addChild(lens2)
-        
-        //draw focal point
-        let focalPoint = SKShapeNode(circleOfRadius: radius)
-        focalPoint.lineWidth = 1
-        focalPoint.fillColor = .white
-        focalPoint.strokeColor = .blue
-        focalPoint.glowWidth = 2.0
-        focalPoint.name = FocalPointCategoryName
-        //lensmaker's equation
-        let f = (refractionIndex - 1) * (1 / lensRadius2 - 1 / lensRadius1 + ((refractionIndex - 1) * (distance1 + distance2))/(refractionIndex * lensRadius1 * lensRadius2))
-        
-        focalPoint.position = CGPoint(x: 1/f, y: lightY)
-        
-        addChild(focalPoint)
- 
+        targetY = CGFloat(arc4random_uniform(UInt32(size.height)))
+        target.position = CGPoint(x: size.width * 0.9, y: targetY!)
+        addChild(target)
         updateRays()
         
         
     }
     
+    
+    /// Handles beginning touches
+    ///
+    /// - Parameters:
+    ///   - touches: the set of touches
+    ///   - event: the event
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Touches began")
+        positions = Array(repeating: 0.0, count: Int(size.width))
+
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
-        if let node = self.nodes(at: touchLocation).first {
+        print(self.nodes(at: touchLocation))
+        for node in self.nodes(at: touchLocation) {
             if node.name == LightCategoryName {
                 print("Touched light")
                 isFingerOnLight = true
+                return
             }
         }
+        
+        isDragging = true
+        print("Beginning drag")
+        positions?[Int(touchLocation.x)] = touchLocation.y
     }
     
+    
+    /// Handles touch movement
+    /// Handles dragging from the light separately from dragging
+    /// a confirmation
+    ///
+    /// - Parameters:
+    ///   - touches: the set of touches
+    ///   - event: the event
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isFingerOnLight {
             let touch = touches.first
             let touchLocation = touch!.location(in: self)
-            let previousLocation = touch!.previousLocation(in: self)
-            
-            let light = childNode(withName: LightCategoryName) as! SKShapeNode
-            
-            lightY = light.position.y + (touchLocation.y - previousLocation.y)
-            
-            
-            lightY = max(lightY, size.height * 0.1)
-            lightY = min(lightY, size.height * 0.9)
-            
-            light.position = CGPoint(x: light.position.x, y: lightY)
-           
-            updateRays()
-            
-            
+            var found = false
+            for node in self.nodes(at: touchLocation) {
+                if node.name == LightCategoryName {
+                    found = true
+                    break;
+                }
+            }
+            if(found) {
+                let previousLocation = touch!.previousLocation(in: self)
+                
+                let light = childNode(withName: LightCategoryName) as! SKShapeNode
+                
+                lightY = light.position.y + (touchLocation.y - previousLocation.y)
+                let minimum : CGFloat? = size.height/2 - height! - size.width * 0.4 * tan(angle)
+                let maximum : CGFloat? = size.height/2 + height! - size.width * 0.4 * tan(angle)
+                
+                lightY = max(lightY!, minimum!)
+                lightY = min(lightY!, maximum!)
+                
+                light.position = CGPoint(x: light.position.x, y: lightY!)
+                updateRays()
+
+            } else {
+                isFingerOnLight = false
+                isDragging = true
+                print("Beginning drag")
+                positions = Array(repeating: 0.0, count: Int(size.width))
+                positions?[Int(touchLocation.x)] = touchLocation.y
+                
+            }
+        } else if isDragging {
+            let touch = touches.first
+            let touchLocation = touch!.location(in: self)
+            print(touchLocation)
+            positions?[Int(touchLocation.x)] = touchLocation.y
+        }
+        
+
+    }
+    
+    
+    /// Draws a line using a cgpath
+    ///
+    /// - Parameters:
+    ///   - p: the path
+    ///   - name: the name of the line
+    ///   - color: the color of the line
+    func drawLine(withPath p : CGPath, name : String, color: UIColor) {
+        if let line = childNode(withName: name) as? SKShapeNode {
+            line.path = p
+            line.strokeColor = color
+        } else {
+            let line = SKShapeNode(path: p)
+            line.strokeColor = color
+            line.name = name
+            addChild(line)
         }
     }
     
+    
+    /// Draws a line between two points
+    ///
+    /// - Parameters:
+    ///   - p1: the first point
+    ///   - p2: the second point
+    ///   - name: the name of the line ( so it will be reused )
+    ///   - color: the color of the line
+    func drawLine(betweenPoints p1 : CGPoint, and p2 : CGPoint, name : String, color : UIColor) {
+        let path = UIBezierPath()
+        path.move(to: p1)
+        path.addLine(to: p2)
+        drawLine(withPath: path.cgPath, name: name, color: color)
+    }
+    
+    
+    /// Updates the incident rays when the light source is moved
     func updateRays() {
-        
         let light = childNode(withName: LightCategoryName) as! SKShapeNode
         let startPosition = light.position
         
-        let angle : CGFloat = CGFloat.pi / 16
         
-        //let angle : CGFloat = 0.0
-        
-        let originSlope = atan(angle)
-        // y = originSlope(x) + originb
-        let originb = -originSlope * startPosition.x + startPosition.y
-        
-        let originA = originSlope * originSlope + 1
-        let originB = 2 * (originb * originSlope - center2.x - center2.y * originSlope)
-        let originC = center2.y * center2.y + center2.x * center2.x + originb * originb - 2 * center2.y * originb - lensRadius2 * lensRadius2
-        let originDiscriminant = originB * originB - 4 * originA * originC
-        
-        let ax = (-originB - sqrt(originDiscriminant)) / (2 * originA)
-        let ay = originSlope * ax + originb
+        let originLine = Line(fromPoint: startPosition, andAngle: angle)
+        let result = lens?.handleIncidentRay(ray: originLine)
+        leftIntersection = result?.0
+        rightIntersection = result?.1
         
         
-        if(ay > size.height/2 + height || ay < size.height / 2 - height || originDiscriminant < 0){
+        drawLine(betweenPoints: startPosition, and: leftIntersection!, name: OriginRayCategoryName, color: .white)
+        drawLine(betweenPoints: leftIntersection!, and: rightIntersection!, name: InteriorRayCategoryName, color: .white)
+        if let exitLine = result?.2 {
+            let right = CGPoint(x: size.width, y: exitLine.solveY(forX: size.width))
+            drawLine(betweenPoints: rightIntersection!, and: right, name: FinalRayCategoryName, color: .white)
+            let c = Circle(radius: 20.0, center: CGPoint(x: size.width * 0.9, y: targetY!))
+            let target = childNode(withName: TargetCategoryName) as! SKShapeNode
+
+            if calculateLineCircleIntersection(line: exitLine, circle: c) != nil {
+                target.fillColor = .white
+            } else {
+                target.fillColor = .black
+            }
+            
+        } else {
             for child in children {
-                if child.name == NormalAlphaCategoryName || child.name == NormalBetaCategoryName || child.name == InteriorRayCategoryName || child.name == FinalRayCategoryName {
+                if child.name == FinalRayCategoryName {
                     child.removeFromParent()
                 }
-                //let y = angle > 0 ? size.height : 0
-                //let endPoint = CGPoint(x: (y - originb) / originSlope, y: y)
-                
-                let endPoint = CGPoint(x: size.width, y: originSlope * (size.width - startPosition.x) + startPosition.y)
-                let apath = UIBezierPath()
-                apath.move(to: startPosition)
-                apath.addLine(to: endPoint)
-                if let originRay = childNode(withName: OriginRayCategoryName) as? SKShapeNode {
-                    originRay.path = apath.cgPath
-                } else {
-                    let originRay = SKShapeNode(path: apath.cgPath)
-                    originRay.name = OriginRayCategoryName
-                    addChild(originRay)
-                }
-
             }
-            return
+            let target = childNode(withName: TargetCategoryName) as! SKShapeNode
+            target.fillColor = .black
+            
         }
-        
-        
-        
-        let a = CGPoint(x: ax, y: ay)        // ORIGIN RAY
-     
-        
-        let apath = UIBezierPath()
-        apath.move(to: startPosition)
-        apath.addLine(to: a)
-        if let originRay = childNode(withName: OriginRayCategoryName) as? SKShapeNode {
-            originRay.path = apath.cgPath
-        } else {
-            let originRay = SKShapeNode(path: apath.cgPath)
-            originRay.name = OriginRayCategoryName
-            addChild(originRay)
-        }
-        
-        // INTERIOR RAY
-        
-         /*NORMAL LINE TESTING */
-        let napath = UIBezierPath()
-        napath.move(to: a)
-        napath.addLine(to: center2)
-        if let normalRay = childNode(withName: NormalAlphaCategoryName) as? SKShapeNode {
-            normalRay.path = napath.cgPath
-        } else {
-            let normalRay = SKShapeNode(path: napath.cgPath)
-            normalRay.strokeColor = .cyan
-            normalRay.name = NormalAlphaCategoryName
-            addChild(normalRay)
-        }
-        
-        
-        
-        let normalSlope = (center2.y - a.y)/(center2.x - a.x)
-        
-        let normalAngle = atan(normalSlope) //if slope is negative, angle will be negative
-        let alpha = angle - normalAngle
-        
-        let r_alpha = asin(sin(alpha)/refractionIndex) + normalAngle
-        let m = atan(r_alpha)
 
-        let b = -m * a.x + a.y
-        
-        let A = m * m + 1
-        let B = 2 * (b * m - center1.x - center1.y * m)
-        let C = center1.y * center1.y + center1.x * center1.x + b * b - 2 * center1.y * b - lensRadius1 * lensRadius1
-        let discriminant = sqrt(B * B - 4 * A * C)
-        let bx1 = (-B + discriminant)/(2 * A)
-        let by1 = m * bx1 + b
-        
-        
-        
-        let bpoint = CGPoint(x: bx1, y: by1)
-        
-        let bpath = UIBezierPath()
-        bpath.move(to: a)
-        bpath.addLine(to: bpoint)
-        if let interiorRay = childNode(withName: InteriorRayCategoryName) as? SKShapeNode {
-            interiorRay.path = bpath.cgPath
-        } else {
-            let interiorRay = SKShapeNode(path: bpath.cgPath)
-            interiorRay.name = InteriorRayCategoryName
-            addChild(interiorRay)
-        }
- 
-        
-        //get the other normal line
-        let nbpath = UIBezierPath()
-        nbpath.move(to: bpoint)
-        nbpath.addLine(to: center1)
-        if let normalRay = childNode(withName: NormalBetaCategoryName) as? SKShapeNode {
-            normalRay.path = nbpath.cgPath
-        } else {
-            let normalRay = SKShapeNode(path: nbpath.cgPath)
-            normalRay.strokeColor = .cyan
-            normalRay.name = NormalBetaCategoryName
-            addChild(normalRay)
-        }
-        let betaNormalSlope = (center1.y - bpoint.y) / (center1.x - bpoint.x)
-        let normal = atan(betaNormalSlope)
-        let incidentSlope = (bpoint.y - a.y) / (bpoint.x - a.x)
-        let incident = atan(incidentSlope)
-        
-        let beta = incident - normal
-        let temp = sin(beta) * refractionIndex
-        //var offset : CGFloat = 0.0
-        
-        
-        if temp > 1 || temp < -1 {
-            if let finalRay = childNode(withName: FinalRayCategoryName) as? SKShapeNode {
-                finalRay.removeFromParent()
-            }
-            return
-        }
-        
-        let r_beta = asin(temp)
-        let mb = atan(r_beta + normal)
-        
-        print("temp = \(temp), normal = \(normal * 180 / CGFloat.pi), r_beta = \(r_beta * 180 / CGFloat.pi), beta = \(beta * 180 / CGFloat.pi)" )
-        let edgePoint = CGPoint(x: size.width, y: mb * (size.width - bpoint.x) + bpoint.y)
-        
-        let finalPath = UIBezierPath()
-        finalPath.move(to: bpoint)
-        finalPath.addLine(to: edgePoint)
-        if let finalRay = childNode(withName: FinalRayCategoryName) as? SKShapeNode {
-            finalRay.path = finalPath.cgPath
-        } else {
-            let finalRay = SKShapeNode(path: finalPath.cgPath)
-            finalRay.name = FinalRayCategoryName
-            addChild(finalRay)
-        }
     }
     
     
+    /// Handles the end of a touch event, updating the dragging
+    ///
+    /// - Parameters:
+    ///   - touches: the set of touches
+    ///   - event: the event
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Touch ended")
         isFingerOnLight = false
+        if(isDragging){
+            
+            //TODO: Refactor and extract this part
+            isDragging = false
+            
+            
+            let left = Int(leftIntersection!.x)
+            let right = Int(rightIntersection!.x)
+            let end = Int(size.width * 0.9)
+            
+            print("leftIntersection: \(leftIntersection!.y) rightIntersection: \(rightIntersection!.y) target: \(targetY!)")
+            var matches = true
+            let epsilon : CGFloat = 10.0
+            
+            var local = false
+            for i in (left-5)..<(left+5) {
+                let val = positions![i]
+                print(val)
+                if(abs(val - leftIntersection!.y) <= epsilon){
+                    local = true
+                }
+                
+            }
+            matches = matches && local
+            local = false
+            print("right")
+            for i in (right-5)..<(right+5){
+                let val = positions![i]
+                print(val)
+
+                if(abs(val - rightIntersection!.y) <= epsilon){
+                    local = true
+                }
+               
+            }
+            matches = matches && local
+            local = false
+            print("end")
+            for i in (end-5)...(end+5) {
+                let val = positions![i]
+                print(val)
+
+                if(abs(val - targetY!) <= epsilon){
+                    local = true
+                }
+            }
+            matches = matches && local
+            
+            
+            let originRay = childNode(withName: OriginRayCategoryName) as! SKShapeNode
+            let interiorRay = childNode(withName: InteriorRayCategoryName) as! SKShapeNode
+            let exitRay = childNode(withName: FinalRayCategoryName) as? SKShapeNode
+            
+            if(matches){
+                originRay.strokeColor = .green
+                interiorRay.strokeColor = .green
+                exitRay?.strokeColor = .green
+            } else {
+                originRay.strokeColor = .red
+                interiorRay.strokeColor = .red
+                exitRay?.strokeColor = .red
+            }
+
+        }
+        
     }
     
     

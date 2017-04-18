@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED3C288D1EA6942F0005FBFB /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C288C1EA6942F0005FBFB /* Puzzle.swift */; };
+		ED3C288F1EA6BB600005FBFB /* PuzzleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C288E1EA6BB600005FBFB /* PuzzleTest.swift */; };
+		ED3C28901EA6BC180005FBFB /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C288C1EA6942F0005FBFB /* Puzzle.swift */; };
+		ED3C28911EA6BD1F0005FBFB /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59E4231E9D262900AED2E1 /* Lens.swift */; };
 		ED59E4241E9D262900AED2E1 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59E4231E9D262900AED2E1 /* Lens.swift */; };
 		ED59E4271E9D2B7F00AED2E1 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59E4261E9D2B7F00AED2E1 /* Geometry.swift */; };
 		ED59E4321E9D5FC800AED2E1 /* GeometryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59E4311E9D5FC800AED2E1 /* GeometryTest.swift */; };
@@ -30,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED3C288C1EA6942F0005FBFB /* Puzzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
+		ED3C288E1EA6BB600005FBFB /* PuzzleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleTest.swift; sourceTree = "<group>"; };
 		ED59E4231E9D262900AED2E1 /* Lens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
 		ED59E4261E9D2B7F00AED2E1 /* Geometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		ED59E42F1E9D5FC800AED2E1 /* Optics-MSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Optics-MSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +74,7 @@
 			children = (
 				ED59E4311E9D5FC800AED2E1 /* GeometryTest.swift */,
 				ED59E4331E9D5FC800AED2E1 /* Info.plist */,
+				ED3C288E1EA6BB600005FBFB /* PuzzleTest.swift */,
 			);
 			path = "Optics-MSTests";
 			sourceTree = "<group>";
@@ -97,6 +104,7 @@
 				EDB799D61E136C3800AD82E2 /* AppDelegate.swift */,
 				ED59E4231E9D262900AED2E1 /* Lens.swift */,
 				ED59E4261E9D2B7F00AED2E1 /* Geometry.swift */,
+				ED3C288C1EA6942F0005FBFB /* Puzzle.swift */,
 				EDB799DE1E136C3800AD82E2 /* GameViewController.swift */,
 				EDB799E01E136C3800AD82E2 /* Main.storyboard */,
 				EDB799E31E136C3800AD82E2 /* Assets.xcassets */,
@@ -211,6 +219,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED3C28911EA6BD1F0005FBFB /* Lens.swift in Sources */,
+				ED3C28901EA6BC180005FBFB /* Puzzle.swift in Sources */,
+				ED3C288F1EA6BB600005FBFB /* PuzzleTest.swift in Sources */,
 				ED59E4391E9D5FED00AED2E1 /* Geometry.swift in Sources */,
 				ED59E4321E9D5FC800AED2E1 /* GeometryTest.swift in Sources */,
 			);
@@ -223,6 +234,7 @@
 				EDB799DD1E136C3800AD82E2 /* GameScene.swift in Sources */,
 				EDB799DF1E136C3800AD82E2 /* GameViewController.swift in Sources */,
 				EDB799D71E136C3800AD82E2 /* AppDelegate.swift in Sources */,
+				ED3C288D1EA6942F0005FBFB /* Puzzle.swift in Sources */,
 				ED59E4271E9D2B7F00AED2E1 /* Geometry.swift in Sources */,
 				ED59E4241E9D262900AED2E1 /* Lens.swift in Sources */,
 			);
@@ -419,6 +431,7 @@
 				ED59E4381E9D5FC800AED2E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EDB799CE1E136C3800AD82E2 /* Build configuration list for PBXProject "Optics-MS" */ = {
 			isa = XCConfigurationList;

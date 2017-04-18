@@ -20,17 +20,62 @@ class GeometryTest: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        print("Test!")
+    func testCircleIntersect() {
+       
+        let a = Line(m: 0.0, b: 0.0)
+        let c = Circle(radius: 2, center: CGPoint(x: 0.0, y: 0.0))
+        
+        if let intersects = calculateLineCircleIntersection(line: a, circle: c) {
+            XCTAssertEqual(CGPoint(x: 2.0, y: 0.0), intersects.0)
+            XCTAssertEqual(CGPoint(x: -2.0, y: 0.0), intersects.1)
+        } else {
+            XCTFail("Found no intersections")
+        }
+        
+        let angled = Line(m: 1.0, b: 0.0)
+        if let intersects = calculateLineCircleIntersection(line: angled, circle: c) {
+            XCTAssertEqual(CGPoint(x: sqrt(2), y: sqrt(2)), intersects.0)
+            XCTAssertEqual(CGPoint(x: -sqrt(2), y: -sqrt(2)), intersects.1)
+        } else {
+            XCTFail("Found no intersection")
+        }
+        
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testNoIntersect() {
+        let a = Line(m: 4.0, b: 20.0)
+        let c = Circle(radius: 2, center: CGPoint(x: 0.0, y: 0.0))
+        
+        if let _ = calculateLineCircleIntersection(line: a, circle: c) {
+            XCTFail("Intersections detected")
         }
     }
+    
+    func testAcuteAngle() {
+        let a = Line(m: 0.0, b: 0.0)
+        let b = Line(m: 1.0, b: 0.0)
+        
+        let angle = calculateAngleBetweenLines(a: a, b: b)
+        XCTAssertEqual(abs(angle), CGFloat.pi/4)
+        
+        let angle2 = calculateAngleBetweenLines(a: b, b: a)
+        XCTAssertEqual(abs(angle2), CGFloat.pi/4)
+    
+        
+    }
+    
+    func testObtuseAngle() {
+        let a = Line(m: 0.0, b: 0.0)
+        let b = Line(m: -1.0, b: 0.0)
+        let angle = calculateAngleBetweenLines(a: a, b: b)
+        XCTAssertEqual(abs(angle), CGFloat.pi/4)
+        
+        
+        let angle2 = calculateAngleBetweenLines(a: b, b: a)
+        XCTAssertEqual(abs(angle2), CGFloat.pi/4)
+      
+    }
+    
     
 }
