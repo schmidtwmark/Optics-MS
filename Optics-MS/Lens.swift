@@ -131,9 +131,6 @@ class Lens {
             let exitLine = Line(fromPoint: rightIntersection!, andAngle: phi!, relativeTo: rightNormal!)
             return (intersection!, rightIntersection!, exitLine)
         }
-
-    
-
     }
 
 
