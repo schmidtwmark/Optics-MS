@@ -9,20 +9,20 @@
 import Foundation
 import SpriteKit
 
-enum ShowStatus {
-    case showAll // shows all lines throughout the lens
-    case showInterior // shows only the origin and interior
-    case showOrigin // shows only the origin line
+enum ShowStatus : String {
+    case showAll = "showAll" // shows all lines throughout the lens
+    case showInterior = "showInterior" // shows only the origin and interior
+    case showOrigin = "showOrigin" // shows only the origin line
     
 }
 
-enum Difficulty {
+enum Difficulty : String {
     // Increasing solution range width
-    case Easy //Constant lens radius, no angle
-    case Medium //Random symmetric lens, no angle
-    case Hard //Random symmetric lens, angled input
-    case Expert //Random asymmetric lens, angled input
-    case Debug
+    case Easy = "easy" //Constant lens radius, no angle
+    case Medium = "medium" //Random symmetric lens, no angle
+    case Hard = "hard" //Random symmetric lens, angled input
+    case Expert = "expert" //Random asymmetric lens, angled input
+    case Debug = "debug"
 }
 
 
@@ -104,6 +104,53 @@ class Puzzle {
         
     }
     
+    init(data : Data) {
+        var jsonObject : [String : Any]
+        do {
+            jsonObject = try JSONSerialization.jsonObject(with: data) as! [String : Any]
+        } catch {
+            print("Unable to deserialize Lens")
+            jsonObject = [:]
+        }
+        print(jsonObject)
+        
+        lens = Lens(withData: (jsonObject["lens"] as! String).data(using: .utf8)!)
+        originAngle = jsonObject["originAngle"] as! CGFloat
+        solutionY = jsonObject["solutionY"] as! CGFloat
+        attempts = jsonObject["attempts"] as! Int
+        showStatus = ShowStatus(rawValue: jsonObject["showStatus"] as! String)!
+        difficulty = Difficulty(rawValue: jsonObject["difficulty"] as! String)!
+    }
+    
+    ///Returns a json string representing the puzzle
+    func serialize() -> Data {
+        let jsonObject = [
+            "lens" : String(data: lens.serialize(), encoding: .utf8)!,
+            "originAngle" : originAngle,
+            "solutionY" : solutionY,
+            "attempts" : attempts,
+            "showStatus" : showStatus.rawValue,
+            "difficulty" : difficulty.rawValue
+            
+            ] as [String : Any]
+        if JSONSerialization.isValidJSONObject(jsonObject) {
+            do {
+                let rawData = try JSONSerialization.data(withJSONObject: jsonObject)
+                return rawData
+            } catch {
+                print("Unable to serialize lens valid")
+                return Data()
+            }
+        } else {
+            print("Unable to serialize lens")
+            return Data()
+        }
+    }
+    
+    
+    /// Randomizes the light position, keeping other aspects the same
+    ///
+    /// - Parameter frameHeight: <#frameHeight description#>
     func randomizeLightPosition(frameHeight : CGFloat) {
         var solutionRange : ClosedRange<CGFloat>
         
@@ -123,6 +170,9 @@ class Puzzle {
         solutionY = Puzzle.generateRandomNumber(withinRange: solutionRange)
     }
     
+    
+    
+    /// Increments the show status variable
     func incrementStatus() {
         switch showStatus {
         case .showAll:
@@ -161,8 +211,9 @@ class Puzzle {
         number *= (r.upperBound - r.lowerBound)
         number += r.lowerBound
         return number
-
     }
+    
+    
     
     
 }

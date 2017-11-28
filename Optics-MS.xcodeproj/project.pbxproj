@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E16243EDE3E8F43F344DB4D /* Pods_Optics_MSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312F77C097685E0EAD5DA238 /* Pods_Optics_MSTests.framework */; };
+		94C9FB7D16A701A07F7BBDA4 /* Pods_Optics_MS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F505519482F0C95663D9FF /* Pods_Optics_MS.framework */; };
+		ED0092061EB00DA200857ECE /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED0092051EB00DA200857ECE /* Alamofire.framework */; };
 		ED3C288D1EA6942F0005FBFB /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C288C1EA6942F0005FBFB /* Puzzle.swift */; };
 		ED3C288F1EA6BB600005FBFB /* PuzzleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C288E1EA6BB600005FBFB /* PuzzleTest.swift */; };
 		ED3C28901EA6BC180005FBFB /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C288C1EA6942F0005FBFB /* Puzzle.swift */; };
@@ -35,6 +38,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18249987555EC939197CDC82 /* Pods-Optics-MS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Optics-MS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Optics-MS/Pods-Optics-MS.release.xcconfig"; sourceTree = "<group>"; };
+		312F77C097685E0EAD5DA238 /* Pods_Optics_MSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Optics_MSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		66F505519482F0C95663D9FF /* Pods_Optics_MS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Optics_MS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		797FEA34C40B4F7ABEA98BF9 /* Pods-Optics-MSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Optics-MSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Optics-MSTests/Pods-Optics-MSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C88B18710C34533BF784AD5B /* Pods-Optics-MS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Optics-MS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Optics-MS/Pods-Optics-MS.debug.xcconfig"; sourceTree = "<group>"; };
+		CCCE9ECD91AE2757AD176B44 /* Pods-Optics-MSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Optics-MSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Optics-MSTests/Pods-Optics-MSTests.release.xcconfig"; sourceTree = "<group>"; };
+		ED0092041EB00C0000857ECE /* HTTPTest.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HTTPTest.playground; sourceTree = "<group>"; };
+		ED0092051EB00DA200857ECE /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../Library/Developer/Xcode/DerivedData/Optics-MS-eamqrfgyfjesceangswzpbqikbrq/Build/Products/Debug-iphonesimulator/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
 		ED3C288C1EA6942F0005FBFB /* Puzzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
 		ED3C288E1EA6BB600005FBFB /* PuzzleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleTest.swift; sourceTree = "<group>"; };
 		ED3C28961EA701280005FBFB /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
@@ -58,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E16243EDE3E8F43F344DB4D /* Pods_Optics_MSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,12 +77,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED0092061EB00DA200857ECE /* Alamofire.framework in Frameworks */,
+				94C9FB7D16A701A07F7BBDA4 /* Pods_Optics_MS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C5E904A3B3DF2327D3F3805 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C88B18710C34533BF784AD5B /* Pods-Optics-MS.debug.xcconfig */,
+				18249987555EC939197CDC82 /* Pods-Optics-MS.release.xcconfig */,
+				797FEA34C40B4F7ABEA98BF9 /* Pods-Optics-MSTests.debug.xcconfig */,
+				CCCE9ECD91AE2757AD176B44 /* Pods-Optics-MSTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D3112350CE61555C9D4AC9DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED0092051EB00DA200857ECE /* Alamofire.framework */,
+				66F505519482F0C95663D9FF /* Pods_Optics_MS.framework */,
+				312F77C097685E0EAD5DA238 /* Pods_Optics_MSTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ED59E4301E9D5FC800AED2E1 /* Optics-MSTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,9 +119,12 @@
 		EDB799CA1E136C3800AD82E2 = {
 			isa = PBXGroup;
 			children = (
+				ED0092041EB00C0000857ECE /* HTTPTest.playground */,
 				EDB799D51E136C3800AD82E2 /* Optics-MS */,
 				ED59E4301E9D5FC800AED2E1 /* Optics-MSTests */,
 				EDB799D41E136C3800AD82E2 /* Products */,
+				3C5E904A3B3DF2327D3F3805 /* Pods */,
+				D3112350CE61555C9D4AC9DC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,9 +162,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED59E4361E9D5FC800AED2E1 /* Build configuration list for PBXNativeTarget "Optics-MSTests" */;
 			buildPhases = (
+				C5D8F7D4368FADE824C3C263 /* [CP] Check Pods Manifest.lock */,
 				ED59E42B1E9D5FC800AED2E1 /* Sources */,
 				ED59E42C1E9D5FC800AED2E1 /* Frameworks */,
 				ED59E42D1E9D5FC800AED2E1 /* Resources */,
+				9DD35425365B15DAD97ED1AD /* [CP] Embed Pods Frameworks */,
+				36A105EBCDAEEB404AB1401C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -142,9 +183,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDB799EB1E136C3800AD82E2 /* Build configuration list for PBXNativeTarget "Optics-MS" */;
 			buildPhases = (
+				C74BF267B8325746239212B9 /* [CP] Check Pods Manifest.lock */,
 				EDB799CF1E136C3800AD82E2 /* Sources */,
 				EDB799D01E136C3800AD82E2 /* Frameworks */,
 				EDB799D11E136C3800AD82E2 /* Resources */,
+				374CDF0FCD227A49E265D19A /* [CP] Embed Pods Frameworks */,
+				ED2518D47A15F94971A449FD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -217,6 +261,99 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		36A105EBCDAEEB404AB1401C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Optics-MSTests/Pods-Optics-MSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		374CDF0FCD227A49E265D19A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Optics-MS/Pods-Optics-MS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9DD35425365B15DAD97ED1AD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Optics-MSTests/Pods-Optics-MSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C5D8F7D4368FADE824C3C263 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C74BF267B8325746239212B9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ED2518D47A15F94971A449FD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Optics-MS/Pods-Optics-MS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		ED59E42B1E9D5FC800AED2E1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -276,6 +413,7 @@
 /* Begin XCBuildConfiguration section */
 		ED59E4371E9D5FC800AED2E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 797FEA34C40B4F7ABEA98BF9 /* Pods-Optics-MSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = C2UW47HS8X;
@@ -290,6 +428,7 @@
 		};
 		ED59E4381E9D5FC800AED2E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCCE9ECD91AE2757AD176B44 /* Pods-Optics-MSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = C2UW47HS8X;
@@ -397,6 +536,7 @@
 		};
 		EDB799EC1E136C3800AD82E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C88B18710C34533BF784AD5B /* Pods-Optics-MS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C2UW47HS8X;
@@ -412,6 +552,7 @@
 		};
 		EDB799ED1E136C3800AD82E2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 18249987555EC939197CDC82 /* Pods-Optics-MS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C2UW47HS8X;

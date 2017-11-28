@@ -16,7 +16,8 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         super.viewDidLoad()
-        let scene = GameScene(size: view.bounds.size, difficulty: .Hard)
+        //let scene = GameScene(size: view.bounds.size, difficulty: .Hard)
+        let scene = MenuScene(size: view.bounds.size)
         let skView = view as! SKView
         skView.showsFPS = true
         skView.showsNodeCount = true

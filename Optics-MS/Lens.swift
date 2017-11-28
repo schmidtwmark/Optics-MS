@@ -51,6 +51,58 @@ class Lens {
     }
     
     
+    /// Inits using serialized data
+    ///
+    /// - Parameter data: the data
+    init(withData data : Data) {
+        var jsonObject : [String : Any]
+        do {
+            jsonObject = try JSONSerialization.jsonObject(with: data) as! [String : Any]
+        } catch {
+            print("Unable to deserialize Lens")
+            jsonObject = [:]
+        }
+        print(jsonObject)
+        
+        leftCircle = Circle(data: (jsonObject["leftCircle"] as! String).data(using: .utf8)!)
+        rightCircle = Circle(data: (jsonObject["rightCircle"] as! String).data(using: .utf8)!)
+        leftAngle = jsonObject["leftAngle"] as! CGFloat
+        rightAngle = jsonObject["rightAngle"] as! CGFloat
+        height = jsonObject["height"] as! CGFloat
+        rightLensDistance = jsonObject["rightLensDistance"] as! CGFloat
+        leftLensDistance = jsonObject["leftLensDistance"] as! CGFloat
+        refractionIndex = jsonObject["refractionIndex"] as! CGFloat
+    }
+    
+    
+    /// Serializes the lens into json data
+    ///
+    /// - Returns: the data
+    func serialize() -> Data {
+        let jsonObject = [
+            "leftCircle" : String(data: leftCircle.serialize(), encoding: .utf8)!,
+            "rightCircle" : String(data: rightCircle.serialize(), encoding: .utf8)!,
+            "leftAngle" : leftAngle,
+            "rightAngle" : rightAngle,
+            "height" : height,
+            "rightLensDistance" : rightLensDistance,
+            "leftLensDistance" : leftLensDistance,
+            "refractionIndex" : refractionIndex
+        ] as [String : Any]
+        if JSONSerialization.isValidJSONObject(jsonObject) {
+            do {
+                let rawData = try JSONSerialization.data(withJSONObject: jsonObject)
+                return rawData
+            } catch {
+                print("Unable to serialize lens valid")
+                return Data()
+            }
+        } else {
+            print("Unable to serialize lens")
+            return Data()
+        }
+    }
+    
     /// Moves the lens to the center of the frame
     ///
     /// - Parameters:
@@ -71,7 +123,7 @@ class Lens {
     /// - Returns: the point of intersection or nil if there is no intersection
     func calculateLeftLensIntersection(incidentLine line: Line) -> CGPoint? {
         if let points = calculateLineCircleIntersection(line: line, circle: leftCircle) {
-            let range = (leftCircle.center.x - leftCircle.radius) ..< (leftCircle.center.x - leftCircle.radius + leftLensDistance)
+            let range = (leftCircle.center.x - leftCircle.radius - 0.01) ..< (leftCircle.center.x - leftCircle.radius + leftLensDistance)
             
             if(range.contains(points.0.x)){
                 return points.0
@@ -132,6 +184,7 @@ class Lens {
             return (intersection!, rightIntersection!, exitLine)
         }
     }
+    
 
 
 }

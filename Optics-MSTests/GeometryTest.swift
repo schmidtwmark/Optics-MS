@@ -77,5 +77,16 @@ class GeometryTest: XCTestCase {
       
     }
     
+    func testCircleSerialization() {
+        let circle = Circle(radius: 2.0, center: CGPoint(x: 0.0, y: 3.0))
+        let data = circle.serialize()
+        print(data)
+        
+        let deserialized = Circle(data: data)
+        XCTAssertEqual(deserialized.center, circle.center)
+        XCTAssertEqual(deserialized.radius, circle.radius)
+        
+    }
+    
     
 }
